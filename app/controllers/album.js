@@ -1,11 +1,4 @@
-const Pool = require('pg').Pool;
-const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "ikonalx",
-    password: "Krystabella151289",
-    port: 5432
-});
+const pool = require('../configs/db')
 
 
 // Get all albums
@@ -15,7 +8,7 @@ const getAlbums = async (request, response) => {
         if (error) {
             throw error;
         }
-        res.status(200).json(results.rows);
+        response.status(200).json(results.rows);
     })
 }
 
