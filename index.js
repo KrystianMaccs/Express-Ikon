@@ -1,18 +1,23 @@
 const express = require('express');
-
+require('dotenv').config()
 const app = express();
+//const cors = require('cors');
+const bodyParser = require('body-parser');
+const db = require('./app/controllers/album');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    next();
-    });
+app.get('/', (request, response) => {
+    response.json({ info: 'Node.js, Express, and Postgres API' })
+});
 
-try {
-    app.listen(process.env.EXTERNAL_PORT || 3000, () => console.log('Example app is listening on port 3000.'));
-} catch (error) {
-    console.log(error);
-}
+app.get('/albums', db.getAlbums);
+app.get('/albums/:id', db.getAlbumById);
+app.post('/albums', db.createAlbum);
+app.put('/albums/:id', db.updateAlbum);
+app.delete('/albums/:id', db.deleteAlbum);
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`App running on port ${process.env.PORT || 3000}.`)
+});
