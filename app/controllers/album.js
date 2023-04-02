@@ -23,7 +23,7 @@ const getAlbums = async (request, response) => {
 const getAlbumById = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('SELECT * FROM Albums WHERE id = $1', [id], (error, results) => {
+    pool.query('SELECT * FROM Album WHERE id = $1', [id], (error, results) => {
         if (error) {
             throw error
         }
