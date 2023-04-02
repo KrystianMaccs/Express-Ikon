@@ -1,0 +1,1 @@
+A simple photo storage API built in Node and Express
